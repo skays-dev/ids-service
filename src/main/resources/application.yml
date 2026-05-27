@@ -1,0 +1,33 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: ids-service
+  datasource:
+    users:
+      url: ${IDS_USERS_DB_URL:jdbc:mysql://193.203.168.240:3306/u835525338_IDS_users?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+      username: ${IDS_USERS_DB_USERNAME:u835525338_IDS_users}
+      password: ${IDS_USERS_DB_PASSWORD:rLFT!eeCzAQ.hX4}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    main:
+      url: ${IDS_MAIN_DB_URL:jdbc:mysql://193.203.168.240:3306/u835525338_IDS_main?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+      username: ${IDS_MAIN_DB_USERNAME:u835525338_IDS_main}
+      password: ${IDS_MAIN_DB_PASSWORD:rLFT!eeCzAQ.hX4}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+ids:
+  cors-allowed-origins: ${IDS_CORS_ALLOWED_ORIGINS:http://localhost:4200}
+  alert-refresh-poll-delay-ms: ${IDS_ALERT_REFRESH_POLL_DELAY_MS:5000}
+  jwt:
+    issuer: ${IDS_JWT_ISSUER:ids-service}
+    secret: ${IDS_JWT_SECRET:change-this-secret-change-this-secret-change-this-secret-32chars}
+    expiration-minutes: ${IDS_JWT_EXPIRATION_MINUTES:480}

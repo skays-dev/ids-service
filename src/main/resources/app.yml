@@ -1,0 +1,4 @@
+env: local
+appName: IDS
+appNumber: '01'
+appCode: ids
