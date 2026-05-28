@@ -107,13 +107,21 @@ class IdsAlertRepositoryAdapterTest {
     @Test
     void simpleCounters_shouldDelegateToJpaRepository() {
         LocalDateTime from = LocalDateTime.of(2026, 5, 28, 10, 30);
+
         when(idsAlertJpaRepository.existsByEventHash("hash-001")).thenReturn(true);
         when(idsAlertJpaRepository.count()).thenReturn(15L);
         when(idsAlertJpaRepository.countSince(from)).thenReturn(7L);
         when(idsAlertJpaRepository.countByStatusCode("NEW")).thenReturn(6L);
         when(idsAlertJpaRepository.countByRiskAndStatus("HIGH", "NEW")).thenReturn(3L);
-        List<Object[]> byRisk = (List<Object[]>) List.of(new Object[]{"HIGH", 3L});
-        List<Object[]> byStatus = (List<Object[]>) List.of(new Object[]{"NEW", 6L});
+
+        List<Object[]> byRisk = List.<Object[]>of(
+                new Object[]{"HIGH", 3L}
+        );
+
+        List<Object[]> byStatus = List.<Object[]>of(
+                new Object[]{"NEW", 6L}
+        );
+
         when(idsAlertJpaRepository.countByRisk()).thenReturn(byRisk);
         when(idsAlertJpaRepository.countByStatus()).thenReturn(byStatus);
 
@@ -138,9 +146,12 @@ class IdsAlertRepositoryAdapterTest {
     @Test
     void realtimeFingerprint_shouldBuildFingerprintFromFirstRow() {
         when(idsAlertJpaRepository.realtimeFingerprintParts())
-                .thenReturn((List<Object[]>) List.of(new Object[]{12L, "2026-05-28T10:30:00"}));
+                .thenReturn(List.<Object[]>of(
+                        new Object[]{12L, "2026-05-28T10:30:00"}
+                ));
 
-        assertThat(adapter.realtimeFingerprint()).isEqualTo("12|2026-05-28T10:30:00");
+        assertThat(adapter.realtimeFingerprint())
+                .isEqualTo("12|2026-05-28T10:30:00");
     }
 
     @SuppressWarnings("unchecked")
