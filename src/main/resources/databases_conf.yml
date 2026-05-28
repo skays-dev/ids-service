@@ -1,0 +1,13 @@
+ids:
+  datasource:
+    users:
+      url: ${IDS_USERS_DB_URL:jdbc:mysql://193.203.168.240:3306/u835525338_IDS_users?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8}
+      username: ${IDS_USERS_DB_USERNAME:u835525338_IDS_users}
+      password: ${IDS_USERS_DB_PASSWORD:rLFT!eeCzAQ.hX4}
+      driver-name: ${IDS_USERS_DB_DRIVER:com.mysql.cj.jdbc.Driver}
+
+    main:
+      url: ${IDS_MAIN_DB_URL:jdbc:mysql://193.203.168.240:3306/u835525338_IDS_main?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8}
+      username: ${IDS_MAIN_DB_USERNAME:u835525338_IDS_main}
+      password: ${IDS_MAIN_DB_PASSWORD:rLFT!eeCzAQ.hX4}
+      driver-name: ${IDS_MAIN_DB_DRIVER:com.mysql.cj.jdbc.Driver}

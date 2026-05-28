@@ -1,9 +1,9 @@
 package com.ids.presentation.controller;
 
-import com.ids.application.dto.AuthResult;
-import com.ids.application.dto.CurrentUserDto;
-import com.ids.application.usecase.AuthenticateUserUseCase;
-import com.ids.application.usecase.GetCurrentUserUseCase;
+import com.ids.application.dto.usr.AuthResult;
+import com.ids.application.dto.usr.CurrentUserDto;
+import com.ids.application.usecase.usr.AuthenticateUserUseCase;
+import com.ids.application.usecase.usr.GetCurrentUserUseCase;
 import com.ids.presentation.request.LoginRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

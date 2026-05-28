@@ -1,9 +1,9 @@
 package com.ids.infrastructure.security;
 
-import com.ids.application.service.TokenProvider;
-import com.ids.domain.entity.AppRole;
-import com.ids.domain.entity.AppUser;
-import com.ids.infrastructure.config.JwtProperties;
+import com.ids.application.service.usr.TokenProvider;
+import com.ids.domain.entity.usr.UsrRole;
+import com.ids.domain.entity.usr.UsrUser;
+import com.ids.infrastructure.config.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -23,10 +23,10 @@ public class JwtTokenService implements TokenProvider {
     private final JwtProperties jwtProperties;
 
     @Override
-    public TokenResult createToken(AppUser user) {
+    public TokenResult createToken(UsrUser user) {
         Instant now = Instant.now();
         Instant expiresAt = now.plus(jwtProperties.expirationMinutes(), ChronoUnit.MINUTES);
-        List<String> roles = user.getRoles().stream().map(AppRole::getName).sorted().toList();
+        List<String> roles = user.getRoles().stream().map(UsrRole::getName).sorted().toList();
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer(jwtProperties.issuer())

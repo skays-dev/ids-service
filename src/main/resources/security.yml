@@ -1,0 +1,7 @@
+ids:
+  cors-allowed-origins: ${IDS_CORS_ALLOWED_ORIGINS:http://localhost:4200}
+  alert-refresh-poll-delay-ms: ${IDS_ALERT_REFRESH_POLL_DELAY_MS:5000}
+  jwt:
+    issuer: ${IDS_JWT_ISSUER:ids-service}
+    secret: ${IDS_JWT_SECRET:change-this-secret-change-this-secret-change-this-secret-32chars}
+    expiration-minutes: ${IDS_JWT_EXPIRATION_MINUTES:480}
