@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IdsAlert {
+
     private Long id;
     private LocalDateTime time;
     private String reason;
@@ -27,27 +28,56 @@ public class IdsAlert {
     private IdsRiskLevel idsRiskLevel;
     private IdsAlertStatus status;
     private String eventHash;
+
+    // =========================
+    // AI DETECTION
+    // =========================
+
+    private Boolean aiDetected;
+    private BigDecimal aiConfidence;
+    private String aiLabel;
+
+    // =========================
+    // RULE DETECTION
+    // =========================
+
+    private Boolean ruleDetected;
+    private String ruleId;
+    private String ruleCategory;
+    private String ruleMsg;
+
+    // =========================
+    // CORRELATION / EVIDENCE
+    // =========================
+
+    private String correlationKey;
+    private String evidence;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public static IdsAlert createNew(LocalDateTime time,
-                                  String reason,
-                                  String attack,
-                                  BigDecimal confidence,
-                                  String srcIp,
-                                  String dstIp,
-                                  Integer srcPort,
-                                  Integer dstPort,
-                                  Integer proto,
-                                  IdsRiskLevel idsRiskLevel,
-                                  IdsAlertStatus status,
-                                  String eventHash) {
+    public static IdsAlert createNew(
+            LocalDateTime time,
+            String reason,
+            String attack,
+            BigDecimal confidence,
+            String srcIp,
+            String dstIp,
+            Integer srcPort,
+            Integer dstPort,
+            Integer proto,
+            IdsRiskLevel idsRiskLevel,
+            IdsAlertStatus status,
+            String eventHash) {
+
         IdsAlert idsAlert = new IdsAlert();
+
         idsAlert.time = required(time, "IdsAlert time is required");
         idsAlert.confidence = required(confidence, "Confidence is required");
         idsAlert.idsRiskLevel = required(idsRiskLevel, "Risk level is required");
         idsAlert.status = required(status, "IdsAlert status is required");
         idsAlert.eventHash = required(eventHash, "IdsAlert event hash is required");
+
         idsAlert.reason = reason;
         idsAlert.attack = attack;
         idsAlert.srcIp = srcIp;
@@ -55,7 +85,13 @@ public class IdsAlert {
         idsAlert.srcPort = srcPort;
         idsAlert.dstPort = dstPort;
         idsAlert.proto = proto;
+
+        // defaults matching database defaults
+        idsAlert.aiDetected = false;
+        idsAlert.ruleDetected = false;
+
         idsAlert.createdAt = LocalDateTime.now();
+
         return idsAlert;
     }
 

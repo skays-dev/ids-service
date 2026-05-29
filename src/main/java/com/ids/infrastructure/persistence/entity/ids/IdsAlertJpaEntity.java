@@ -9,14 +9,24 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "IDS_ALERT", catalog = "u835525338_IDS_main", indexes = {
-        @Index(name = "idx_ids_idsAlert_time", columnList = "EVENT_TIME"),
-        @Index(name = "idx_ids_idsAlert_hash", columnList = "EVENT_HASH", unique = true)
-})
+@Table(
+        name = "IDS_ALERT",
+        catalog = "u835525338_IDS_main",
+        indexes = {
+                @Index(name = "idx_ids_idsAlert_time", columnList = "EVENT_TIME"),
+                @Index(name = "idx_ids_idsAlert_hash", columnList = "EVENT_HASH", unique = true),
+
+                @Index(name = "IDX_IDS_ALERT_AI_DETECTED", columnList = "AI_DETECTED, EVENT_TIME"),
+                @Index(name = "IDX_IDS_ALERT_RULE_DETECTED", columnList = "RULE_DETECTED, EVENT_TIME"),
+                @Index(name = "IDX_IDS_ALERT_RULE_ID", columnList = "RULE_ID"),
+                @Index(name = "IDX_IDS_ALERT_CORRELATION_KEY", columnList = "CORRELATION_KEY")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
 public class IdsAlertJpaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -59,6 +69,46 @@ public class IdsAlertJpaEntity {
 
     @Column(name = "EVENT_HASH", nullable = false, unique = true, length = 128)
     private String eventHash;
+
+    // =========================
+    // AI DETECTION
+    // =========================
+
+    @Column(name = "AI_DETECTED", nullable = false)
+    private Boolean aiDetected = false;
+
+    @Column(name = "AI_CONFIDENCE", precision = 5, scale = 2)
+    private BigDecimal aiConfidence;
+
+    @Column(name = "AI_LABEL", length = 120)
+    private String aiLabel;
+
+    // =========================
+    // RULE DETECTION
+    // =========================
+
+    @Column(name = "RULE_DETECTED", nullable = false)
+    private Boolean ruleDetected = false;
+
+    @Column(name = "RULE_ID", length = 120)
+    private String ruleId;
+
+    @Column(name = "RULE_CATEGORY", length = 120)
+    private String ruleCategory;
+
+    @Column(name = "RULE_MSG", length = 500)
+    private String ruleMsg;
+
+    // =========================
+    // CORRELATION / EVIDENCE
+    // =========================
+
+    @Column(name = "CORRELATION_KEY", length = 128)
+    private String correlationKey;
+
+    @Lob
+    @Column(name = "EVIDENCE")
+    private String evidence;
 
     @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
