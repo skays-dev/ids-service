@@ -127,6 +127,16 @@ public class IdsAlertRepositoryAdapter implements IdsAlertRepository {
         return String.valueOf(row[0]) + "|" + String.valueOf(row[1]);
     }
 
+    @Override
+    public List<IdsAlert> findNewAlertsAfterId(Long lastSeenId) {
+        return idsAlertJpaRepository.findNewAlertsAfterId(lastSeenId).stream().map(MAPPER::toDomain).toList();
+    }
+
+    @Override
+    public Optional<IdsAlert> findLastAlert() {
+        return idsAlertJpaRepository.findLastAlert().map(MAPPER::toDomain);
+    }
+
     private Specification<IdsAlertJpaEntity> toSpecification(IdsAlertSearchCriteria criteria) {
         return Specification
                 .where(status(criteria.statusCode()))

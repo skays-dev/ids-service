@@ -4,6 +4,6 @@ import com.ids.application.dto.ids.IdsAlertDto;
 
 public interface IdsAlertRealtimePublisher {
     void publish(IdsAlertDto idsAlert);
-
+    void publishCreated(IdsAlertDto idsAlert);
     void publishRefresh();
 }

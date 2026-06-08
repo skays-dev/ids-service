@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IdsAlertJpaRepository extends JpaRepository<IdsAlertJpaEntity, Long>, JpaSpecificationExecutor<IdsAlertJpaEntity> {
@@ -31,4 +32,10 @@ public interface IdsAlertJpaRepository extends JpaRepository<IdsAlertJpaEntity, 
 
     @Query("select count(a), max(coalesce(a.updatedAt, a.createdAt)) from IdsAlertJpaEntity a")
     List<Object[]> realtimeFingerprintParts();
+
+    @Query("select a from IdsAlertJpaEntity a where a.id > :lastSeenId order by a.id asc")
+    List<IdsAlertJpaEntity> findNewAlertsAfterId(@Param("lastSeenId") Long lastSeenId);
+
+    @Query("select a from IdsAlertJpaEntity a order by a.id desc limit 1")
+    Optional<IdsAlertJpaEntity> findLastAlert();
 }

@@ -4,6 +4,9 @@ import com.ids.domain.entity.ids.IdsAlert;
 import com.ids.domain.model.IdsAlertSearchCriteria;
 import com.ids.domain.model.PageQuery;
 import com.ids.domain.model.PageResult;
+import com.ids.infrastructure.persistence.entity.ids.IdsAlertJpaEntity;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,4 +24,6 @@ public interface IdsAlertRepository {
     List<Object[]> countByRisk();
     List<Object[]> countByStatus();
     String realtimeFingerprint();
+    List<IdsAlert> findNewAlertsAfterId(@Param("lastSeenId") Long lastSeenId);
+    Optional<IdsAlert> findLastAlert();
 }

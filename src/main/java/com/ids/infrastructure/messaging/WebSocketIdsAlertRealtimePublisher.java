@@ -12,12 +12,22 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class WebSocketIdsAlertRealtimePublisher implements IdsAlertRealtimePublisher {
+
     private final SimpMessagingTemplate messagingTemplate;
 
     @Override
     public void publish(IdsAlertDto idsAlert) {
         messagingTemplate.convertAndSend("/topic/idsAlerts", Map.of(
                 "type", "ALERT_UPDATED",
+                "at", LocalDateTime.now().toString(),
+                "idsAlert", idsAlert
+        ));
+    }
+
+    @Override
+    public void publishCreated(IdsAlertDto idsAlert) {
+        messagingTemplate.convertAndSend("/topic/idsAlerts", Map.of(
+                "type", "ALERT_CREATED",
                 "at", LocalDateTime.now().toString(),
                 "idsAlert", idsAlert
         ));
